@@ -22,13 +22,18 @@ def january(request):
 def february(request):
     return HttpResponse("Walk for at least 20 minutes every day!")
 
-def monthly_challenges_by_number(request, month=1):
-    if month > 12:
-        return HttpResponseNotFound("This month is not supported!")
-    months = list(monthly_challenge.keys())
-    months = months[month-1]
-    return HttpResponseRedirect("/month/" + months + "/")
+# def monthly_challenges_by_number(request, month=1):
+#     if month > 12:
+#         return HttpResponseNotFound("This month is not supported!")
+#     months = list(monthly_challenge.keys())
+#     months = months[month-1]
+#     return HttpResponseRedirect("/month/" + months + "/")
 
+def index(request):
+    month_list = ''
+    for key in monthly_challenge.keys():
+        month_list += f"<a href='/challenges/{key}'>{key.capitalize()}</a></br>"
+    return HttpResponse(month_list)
 
 def monthly_challenges(request, month):
     challenge_text = monthly_challenge.get(month)
